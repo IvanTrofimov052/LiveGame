@@ -1,5 +1,5 @@
-max_x=1920 # this const need to know the max x coordinat
-max_y=1080 # this const need to know the max y coordinat
+max_x = 1920  # this const need to know the max x coordinat
+max_y = 1080  # this const need to know the max y coordinat
 
 
 # this class need to save the position of field
@@ -27,6 +27,6 @@ def move(field):
     return new_field_array
 
 
-arr = [[1,2,3], [1,2,3]]
+arr = [[1, 2, 3], [1, 2, 3]]
 a = Field(arr)
 print(move(a))
