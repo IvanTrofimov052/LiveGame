@@ -1,10 +1,8 @@
-# в ходе должнобыть вычисление соседедей у каждой клетки потом уюийсвто и ли оставление в живых рождение
-# сделать ссылки на соседей
 import random
 
 
-max_x = 30  # this const need to know the max x coordinat
-max_y = 30  # this const need to know the max y coordinat
+max_x = 3  # this const need to know the max x coordinat
+max_y = 3  # this const need to know the max y coordinat
 
 
 # this class need to save the position of field
