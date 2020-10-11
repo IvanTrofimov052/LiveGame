@@ -3,8 +3,8 @@
 import random
 
 
-max_x = 50  # this const need to know the max x coordinat
-max_y = 50  # this const need to know the max y coordinat
+max_x = 30  # this const need to know the max x coordinat
+max_y = 30  # this const need to know the max y coordinat
 
 
 # this class need to save the position of field
@@ -61,10 +61,15 @@ def init_field():
             array[i][j].neighbors.append(array[(i + 1) % max_y][j])
             array[i][j].neighbors.append(array[i][(j - 1) % max_x])
             array[i][j].neighbors.append(array[i][(j + 1) % max_x])
+            array[i][j].neighbors.append(array[(i + 1) % max_y][(j - 1) % max_x])
+            array[i][j].neighbors.append(array[(i + 1) % max_y][(j + 1) % max_x])
+            array[i][j].neighbors.append(array[(i - 1) % max_y][(j - 1) % max_x])
+            array[i][j].neighbors.append(array[(i - 1) % max_y][(j + 1) % max_x])
 
     return array
 
-# this function is making a move
+
+# this function is making a move(i + 1) % max_y
 def move(field):
     # there we update live neighbords in all cell
     for i in range(len(field.field)):
