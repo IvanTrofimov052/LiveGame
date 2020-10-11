@@ -3,8 +3,8 @@
 import random
 
 
-max_x = 20  # this const need to know the max x coordinat
-max_y = 20  # this const need to know the max y coordinat
+max_x = 50  # this const need to know the max x coordinat
+max_y = 50  # this const need to know the max y coordinat
 
 
 # this class need to save the position of field
@@ -74,7 +74,7 @@ def move(field):
     # there we kill or make new cell
     for i in range(len(field.field)):
         for j in range(len(field.field[i])):
-            field.field[i][j].update_live_neightbord()
+            field.field[i][j].next_die_or_live()
 
     print(field.field)
 
@@ -84,3 +84,4 @@ if __name__ == '__main__':
     a = Field(arr)
     while True:
         move(a)
+
