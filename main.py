@@ -1,8 +1,8 @@
 import random
 
 
-max_x = 3  # this const need to know the max x coordinat
-max_y = 3  # this const need to know the max y coordinat
+max_x = 10  # this const need to know the max x coordinat
+max_y = 10  # this const need to know the max y coordinat
 
 
 # this class need to save the position of field
@@ -17,6 +17,18 @@ class Field:
     # this funcition is returned field as array
     def get_field(self):
         return self.field
+    
+    # this function is making a move(i + 1) % max_y
+    def move(self):
+        # there we update live neighbords in all cell
+        for i in range(len(self.field)):
+            for j in range(len(self.field[i])):
+                self.field[i][j].update_live_neightbord()
+
+        # there we kill or make new cell
+        for i in range(len(self.field)):
+            for j in range(len(self.field[i])):
+                self.field[i][j].next_die_or_live()
 
 
 class Cell:
@@ -35,7 +47,7 @@ class Cell:
     def next_die_or_live(self):
         # checking die or live cell(it deepens of number of neighborhoods)
         if self.live_neightbors < 3 or self.live_neightbors > 3:
-            self.alive = False
+            self.alive = random.choice([True, False, False, False])
         else:
             self.alive = True
 
@@ -51,7 +63,8 @@ def init_field():
             new_cell = Cell()
             new_cell.alive = random.getrandbits(1)
             array[i].append(new_cell)
-
+            print(array[i][j].alive)
+    
     # making link to cell in this array
     for i in range(max_y):
         for j in range(max_x):
@@ -79,7 +92,6 @@ def move(field):
         for j in range(len(field.field[i])):
             field.field[i][j].next_die_or_live()
 
-    print(field.field)
 
 
 if __name__ == '__main__':
@@ -87,4 +99,3 @@ if __name__ == '__main__':
     a = Field(arr)
     while True:
         move(a)
-
