@@ -1,5 +1,7 @@
 import pygame
 from main import *
+import keyboard
+import asyncio
 # import keyboard
 
 WHITE = (255, 255, 255)
@@ -9,6 +11,8 @@ LIGHT_BLUE = (64, 128, 255)
 GREEN = (0, 200, 64)
 YELLOW = (225, 225, 0)
 PINK = (230, 50, 230)
+
+stop = False
 
 pygame.init()
 
@@ -30,6 +34,7 @@ class FieldDraw():
       for i in range(max_y):
         for j in range(max_x):
           coords = (i * 20, j * 20, 19, 19)
+
           if calculated_field.field[i][j].alive == True:
             self.cells[i][j] = pygame.draw.rect(sc, GREEN, coords)
           else:
@@ -49,10 +54,20 @@ field = FieldDraw()
 clock = pygame.time.Clock()
 
 while 1:
-    pygame.display.update()
-    pygame.time.delay(2000)
-    a.move()
+    if stop == False:
+        pygame.display.update()
+        clock.tick(1)
+        a.move()
+    else:
+        pass
+
     field.move(a)
     for i in pygame.event.get():
         if i.type == pygame.QUIT:
             exit()
+        elif i.type == pygame.KEYDOWN:
+            if i.key == pygame.K_SPACE:
+                stop = not stop
+            elif i.key == pygame.K_RIGHT and stop == True:
+                a.move()
+                pygame.display.update()
