@@ -15,18 +15,21 @@ PINK = (230, 50, 230)
 stop = False
 
 pygame.init()
+all_sprites = pygame.sprite.Group()
 
 sc = pygame.display.set_mode((max_x * 20, max_y * 20 + 50))
 
-class DrawingCell():
-    def __init__(self):
+class DrawingCell(pygame.sprite.Sprite):
+    def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((19, 19))
         self.image.fill(GREEN)
         self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
 
     def drawing(self, color):
         self.image.fill(color)
+
 
 class FieldDraw():
     def __init__(self):
@@ -36,7 +39,8 @@ class FieldDraw():
             for j in range(max_x):
                 coords = (i * 20, j * 20, 19, 19)
                 # coords = (0,0, 0 + 15, 0 + 15)
-                self.cells[i].append(DrawingCell())
+                self.cells[i].append(DrawingCell(i * 20, j * 20))
+                all_sprites.add(self.cells[i][j])
                 print(coords)
     
     def move(self, calculated_field):
@@ -62,6 +66,7 @@ field = FieldDraw()
 
 clock = pygame.time.Clock()
 
+
 while 1:
     # cheking the stop of game
     if stop == False:
@@ -72,6 +77,8 @@ while 1:
         pass
 
     field.move(a)
+
+    all_sprites.draw(sc)
 
     for i in pygame.event.get():
         if i.type == pygame.QUIT:

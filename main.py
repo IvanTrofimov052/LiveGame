@@ -1,8 +1,8 @@
 import random
 
 
-max_x = 20  # this const need to know the max x coordinat
-max_y = 20  # this const need to know the max y coordinat
+max_x = 50  # this const need to know the max x coordinat
+max_y = 50  # this const need to know the max y coordinat
 
 
 # this class need to save the position of field
