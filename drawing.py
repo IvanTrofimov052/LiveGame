@@ -1,6 +1,6 @@
 import pygame
 from main import *
-import keyboard
+# import keyboard
 import asyncio
 # import keyboard
 
@@ -87,7 +87,28 @@ while 1:
             # stop or start game
             if i.key == pygame.K_SPACE:
                 stop = not stop
-            # make a move whenthe game a stop
+                print(stop)
+            # make a move when the game a stop
             elif i.key == pygame.K_RIGHT and stop == True:
                 a.move()
                 pygame.display.update()
+        elif i.type == pygame.MOUSEBUTTONUP and stop == True:
+            print('suka')
+            pos = pygame.mouse.get_pos()
+            x = pos[0] // 20
+            y = pos[1] // 20
+
+            print(x)
+            print(y)
+            # try:
+
+
+            a.field[x][y].alive = not a.field[x][y].alive
+            print(a.field[x][y].alive)
+
+            field.move(a)
+            # except:
+            #     pass
+            all_sprites.draw(sc)
+            pygame.display.update()
+            clock.tick(1)
