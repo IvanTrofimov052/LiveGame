@@ -1,3 +1,4 @@
+#ошибка в том что соседи увеличиваюиться
 import random
 
 
@@ -33,8 +34,10 @@ class Field:
 
 class Cell:
     alive = True
-    neighbors = []
     live_neightbors = 0
+
+    def __init__(self):
+        self.neighbors = []
 
     # this function update live neightbords
     def update_live_neightbord(self):
@@ -66,15 +69,14 @@ def init_field():
     for i in range(max_y):
         array.append([])
         for j in range(max_x):
-            new_cell = Cell()
-            new_cell.alive = random.getrandbits(1)
-            array[i].append(new_cell)
-            print(array[i][j].alive)
+            array[i].append(Cell())
+            array[i][j].alive = False
     
     # making link to cell in this array
     for i in range(max_y):
         for j in range(max_x):
             array[i][j].neighbors.append(array[(i - 1) % max_y][j])
+            print(len(array[i][j].neighbors), '1')
             array[i][j].neighbors.append(array[(i + 1) % max_y][j])
             array[i][j].neighbors.append(array[i][(j - 1) % max_x])
             array[i][j].neighbors.append(array[i][(j + 1) % max_x])
@@ -82,6 +84,9 @@ def init_field():
             array[i][j].neighbors.append(array[(i + 1) % max_y][(j + 1) % max_x])
             array[i][j].neighbors.append(array[(i - 1) % max_y][(j - 1) % max_x])
             array[i][j].neighbors.append(array[(i - 1) % max_y][(j + 1) % max_x])
+
+    print(array[0][0])
+    print ( array[0][1] )
 
     return array
 
