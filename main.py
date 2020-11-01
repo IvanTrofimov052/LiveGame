@@ -2,8 +2,8 @@
 import random
 
 
-max_x = 10  # this const need to know the max x coordinat
-max_y = 10  # this const need to know the max y coordinat
+max_x = 20  # this const need to know the max x coordinat
+max_y = 20  # this const need to know the max y coordinat
 
 
 # this class need to save the position of field
@@ -54,6 +54,8 @@ class Cell:
             print(self.live_neightbors, "fck")
             self.alive = False
         elif self.live_neightbors < 2 or self.live_neightbors > 3:
+            self.alive = False
+        elif self.live_neightbors == 2 and self.alive == False:
             self.alive = False
         else:
             self.alive = True
