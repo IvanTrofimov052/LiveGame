@@ -1,6 +1,7 @@
 #ошибка в том что соседи увеличиваюиться
 import random
 
+mode = "1normal"
 
 max_x = 20  # this const need to know the max x coordinat
 max_y = 20  # this const need to know the max y coordinat
@@ -49,16 +50,22 @@ class Cell:
 
     # this function detect die or live this Cell after the move
     def next_die_or_live(self):
-        # checking die or live cell(it deepens of number of neighborhoods)
-        if (self.live_neightbors < 2 or self.live_neightbors > 3) and self.alive == True:
-            print(self.live_neightbors, "fck")
-            self.alive = False
-        elif self.live_neightbors < 2 or self.live_neightbors > 3:
-            self.alive = False
-        elif self.live_neightbors == 2 and self.alive == False:
-            self.alive = False
+        if mode == "normal":
+            # checking die or live cell(it deepens of number of neighborhoods)
+            if (self.live_neightbors < 2 or self.live_neightbors > 3) and self.alive == True:
+                print(self.live_neightbors, "fck")
+                self.alive = False
+            elif self.live_neightbors < 2 or self.live_neightbors > 3:
+                self.alive = False
+            elif self.live_neightbors == 2 and self.alive == False:
+                self.alive = False
+            else:
+                self.alive = True
         else:
-            self.alive = True
+            print('fuck')
+
+            if self.live_neightbors >= 2 and self.alive == False:
+                self.alive = True
 
         self.live_neightbors = 0
 
