@@ -1,10 +1,20 @@
 #ошибка в том что соседи увеличиваюиться
 import random
 
-mode = "1normal"
+mode = "normal"
 
-max_x = 20  # this const need to know the max x coordinat
-max_y = 20  # this const need to know the max y coordinat
+max_x = 40  # this const need to know the max x coordinat
+max_y = 40  # this const need to know the max y coordinat
+
+
+def num_to_binary_system(n):
+    b = []
+
+    while n > 0:
+        b.append(n % 2)
+        n = n // 2
+
+    return b
 
 
 # this class need to save the position of field
@@ -115,7 +125,8 @@ def move(field):
 
 
 if __name__ == '__main__':
-    arr = init_field()
-    a = Field(arr)
-    while True:
-        move(a)
+    # arr = init_field()
+    # a = Field(arr)
+    # while True:
+    #     move(a)
+    print(num_to_binary_system(6))
