@@ -41,7 +41,6 @@ class FieldDraw():
                 # coords = (0,0, 0 + 15, 0 + 15)
                 self.cells[i].append(DrawingCell(i * 20, j * 20))
                 all_sprites.add(self.cells[i][j])
-                print(coords)
     
     def move(self, calculated_field):
       for i in range(max_y):
@@ -87,24 +86,24 @@ while 1:
             # stop or start game
             if i.key == pygame.K_SPACE:
                 stop = not stop
-                print(stop)
             # make a move when the game a stop
             elif i.key == pygame.K_RIGHT and stop == True:
                 a.move()
                 pygame.display.update()
+            # calculate the previous statu
+            elif i.key == pygame.K_DOWN and stop == True:
+                a.previous()
+                pygame.display.update()
+
         elif i.type == pygame.MOUSEBUTTONUP and stop == True:
-            print('suka')
             pos = pygame.mouse.get_pos()
             x = pos[0] // 20
             y = pos[1] // 20
 
-            print(x)
-            print(y)
             # try:
 
 
             a.field[x][y].alive = not a.field[x][y].alive
-            print(a.field[x][y].alive)
 
             field.move(a)
             # except:

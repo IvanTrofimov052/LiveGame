@@ -3,8 +3,8 @@ import random
 
 mode = "normal"
 
-max_x = 40  # this const need to know the max x coordinat
-max_y = 40  # this const need to know the max y coordinat
+max_x = 5  # this const need to know the max x coordinat
+max_y = 5  # this const need to know the max y coordinat
 
 
 def num_to_binary_system(n):
@@ -13,6 +13,9 @@ def num_to_binary_system(n):
     while n > 0:
         b.append(n % 2)
         n = n // 2
+
+    for i in range(len(b)-1, max_x*max_y):
+        b.append(0)
 
     return b
 
@@ -29,7 +32,7 @@ class Field:
     # this funcition is returned field as array
     def get_field(self):
         return self.field
-    
+
     # this function is making a move(i + 1) % max_y
     def move(self):
         # there we update live neighbords in all cell
@@ -42,6 +45,26 @@ class Field:
             for j in range(len(self.field[i])):
                 self.field[i][j].next_die_or_live()
 
+    def previous(self):
+        array = []
+
+        for i in range(2**(max_x * max_y)):
+            bits = num_to_binary_system(i)
+            field = Field(init_field())
+            for j in range(max_x):
+                for k in range(max_y):
+                    coord = max_y * j + k
+
+                    field.field[j][k].alive = bool(bits[coord])
+
+            field.move()
+
+            if(self.field == field.field):
+                array.append(field)
+
+        if(len(array) > 0):
+            print('ggggg')
+            self.field = array[0].field
 
 class Cell:
     alive = True
@@ -50,10 +73,14 @@ class Cell:
     def __init__(self):
         self.neighbors = []
 
+    def __eq__(self, other):
+        print(self.alive == other.alive)
+        return self.alive == other.alive
+
     # this function update live neightbords
     def update_live_neightbord(self):
         self.live_neightbors = 0
-        print(len(self.neighbors))
+
         for j in range(len(self.neighbors)):
             if self.neighbors[j].alive:
                 self.live_neightbors += 1
@@ -72,8 +99,6 @@ class Cell:
             else:
                 self.alive = True
         else:
-            print('fuck')
-
             if self.live_neightbors >= 2 and self.alive == False:
                 self.alive = True
 
@@ -104,9 +129,6 @@ def init_field():
             array[i][j].neighbors.append(array[(i - 1) % max_y][(j - 1) % max_x])
             array[i][j].neighbors.append(array[(i - 1) % max_y][(j + 1) % max_x])
 
-    print(array[0][0])
-    print ( array[0][1] )
-
     return array
 
 
@@ -123,10 +145,16 @@ def move(field):
             field.field[i][j].next_die_or_live()
 
 
+def app(xs):
+    xs[0] = 2
 
 if __name__ == '__main__':
     # arr = init_field()
     # a = Field(arr)
     # while True:
     #     move(a)
-    print(num_to_binary_system(6))
+    # print(num_to_binary_system(6))
+    # xs = [1, 2]
+    # app(xs)
+    # print(xs)
+    ...
