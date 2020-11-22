@@ -2,6 +2,7 @@ import pygame
 from main import *
 # import keyboard
 import asyncio
+
 # import keyboard
 
 WHITE = (255, 255, 255)
@@ -18,6 +19,7 @@ pygame.init()
 all_sprites = pygame.sprite.Group()
 
 sc = pygame.display.set_mode((max_x * 20, max_y * 20 + 50))
+
 
 class DrawingCell(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -41,16 +43,16 @@ class FieldDraw():
                 # coords = (0,0, 0 + 15, 0 + 15)
                 self.cells[i].append(DrawingCell(i * 20, j * 20))
                 all_sprites.add(self.cells[i][j])
-    
-    def move(self, calculated_field):
-      for i in range(max_y):
-        for j in range(max_x):
-          coords = (i * 20, j * 20, 19, 19)
 
-          if calculated_field.field[i][j].alive == True:
-            self.cells[i][j].drawing(GREEN)
-          else:
-              self.cells[i][j].drawing(YELLOW)
+    def move(self, calculated_field):
+        for i in range(max_y):
+            for j in range(max_x):
+                coords = (i * 20, j * 20, 19, 19)
+
+                if calculated_field.field[i][j].alive == True:
+                    self.cells[i][j].drawing(GREEN)
+                else:
+                    self.cells[i][j].drawing(YELLOW)
 
 
 # making a field
@@ -64,7 +66,6 @@ pygame.display.update()
 field = FieldDraw()
 
 clock = pygame.time.Clock()
-
 
 while 1:
     # cheking the stop of game
@@ -101,7 +102,6 @@ while 1:
             y = pos[1] // 20
 
             # try:
-
 
             a.field[x][y].alive = not a.field[x][y].alive
 

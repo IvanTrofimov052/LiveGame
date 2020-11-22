@@ -1,10 +1,12 @@
-#ошибка в том что соседи увеличиваюиться
+# ошибка в том что соседи увеличиваюиться
 import random
+from pprint import pprint as pp
+import copy
 
 mode = "normal"
 
-max_x = 5  # this const need to know the max x coordinat
-max_y = 5  # this const need to know the max y coordinat
+max_x = 4  # this const need to know the max x coordinat
+max_y = 4  # this const need to know the max y coordinat
 
 
 def num_to_binary_system(n):
@@ -14,7 +16,7 @@ def num_to_binary_system(n):
         b.append(n % 2)
         n = n // 2
 
-    for i in range(len(b)-1, max_x*max_y):
+    for i in range(len(b) - 1, max_x * max_y):
         b.append(0)
 
     return b
@@ -48,23 +50,33 @@ class Field:
     def previous(self):
         array = []
 
-        for i in range(2**(max_x * max_y)):
+        print("nice")
+
+        for i in range(2 ** (max_x * max_y)):
             bits = num_to_binary_system(i)
-            field = Field(init_field())
+            field_1 = Field(init_field())
             for j in range(max_x):
                 for k in range(max_y):
                     coord = max_y * j + k
 
-                    field.field[j][k].alive = bool(bits[coord])
+                    field_1.field[k][j].alive = bool(bits[coord])
 
-            field.move()
+            print(i)
 
-            if(self.field == field.field):
-                array.append(field)
+            pred = copy.deepcopy(field_1.field)
+            #pp(pred)
 
-        if(len(array) > 0):
+            field_1.move()
+
+            if (self.field == field_1.field):
+                #pp(array)
+                array.append(pred)
+
+        if (len(array) > 0):
             print('ggggg')
-            self.field = array[0].field
+            pp(array)
+            self.field = array[0]
+
 
 class Cell:
     alive = True
@@ -74,8 +86,10 @@ class Cell:
         self.neighbors = []
 
     def __eq__(self, other):
-        print(self.alive == other.alive)
         return self.alive == other.alive
+
+    def __repr__(self):
+        return str(self.alive)
 
     # this function update live neightbords
     def update_live_neightbord(self):
@@ -90,7 +104,6 @@ class Cell:
         if mode == "normal":
             # checking die or live cell(it deepens of number of neighborhoods)
             if (self.live_neightbors < 2 or self.live_neightbors > 3) and self.alive == True:
-                print(self.live_neightbors, "fck")
                 self.alive = False
             elif self.live_neightbors < 2 or self.live_neightbors > 3:
                 self.alive = False
@@ -115,12 +128,11 @@ def init_field():
         for j in range(max_x):
             array[i].append(Cell())
             array[i][j].alive = False
-    
+
     # making link to cell in this array
     for i in range(max_y):
         for j in range(max_x):
             array[i][j].neighbors.append(array[(i - 1) % max_y][j])
-            print(len(array[i][j].neighbors), '1')
             array[i][j].neighbors.append(array[(i + 1) % max_y][j])
             array[i][j].neighbors.append(array[i][(j - 1) % max_x])
             array[i][j].neighbors.append(array[i][(j + 1) % max_x])
@@ -147,6 +159,7 @@ def move(field):
 
 def app(xs):
     xs[0] = 2
+
 
 if __name__ == '__main__':
     # arr = init_field()
