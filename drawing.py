@@ -52,7 +52,7 @@ class FieldDraw():
                 if calculated_field.field[i][j].alive == True:
                     self.cells[i][j].drawing(GREEN)
                 else:
-                    self.cells[i][j].drawing(YELLOW)
+                    self.cells[i][j].drawing(WHITE)
 
 
 # making a field
@@ -90,6 +90,10 @@ while 1:
             # make a move when the game a stop
             elif i.key == pygame.K_RIGHT and stop == True:
                 a.move()
+                pygame.display.update()
+            # previous stateu
+            elif i.key == pygame.K_LEFT and stop == True:
+                a.prev()
                 pygame.display.update()
             # calculate the previous statu
             elif i.key == pygame.K_DOWN and stop == True:

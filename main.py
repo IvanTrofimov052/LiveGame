@@ -5,8 +5,8 @@ import copy
 
 mode = "normal"
 
-max_x = 4  # this const need to know the max x coordinat
-max_y = 4  # this const need to know the max y coordinat
+max_x = 20  # this const need to know the max x coordinat
+max_y = 20  # this const need to know the max y coordinat
 
 
 def num_to_binary_system(n):
@@ -26,6 +26,8 @@ def num_to_binary_system(n):
 class Field:
     def __init__(self, array):
         self.field = array
+        self.changes = []
+        self.iteration = -1
 
     # this function change the field
     def change_field(self, array):
@@ -37,15 +39,31 @@ class Field:
 
     # this function is making a move(i + 1) % max_y
     def move(self):
-        # there we update live neighbords in all cell
-        for i in range(len(self.field)):
-            for j in range(len(self.field[i])):
-                self.field[i][j].update_live_neightbord()
+        if self.iteration >= len(self.changes) - 1:
+            self.changes.append([])
 
-        # there we kill or make new cell
-        for i in range(len(self.field)):
-            for j in range(len(self.field[i])):
-                self.field[i][j].next_die_or_live()
+            # there we update live neighbords in all cell
+            for i in range(len(self.field)):
+                for j in range(len(self.field[i])):
+                    self.field[i][j].update_live_neightbord()
+
+            # there we kill or make new cell
+            for i in range(len(self.field)):
+                for j in range(len(self.field[i])):
+                    old_stateu = self.field[i][j].alive
+
+                    self.field[i][j].next_die_or_live()
+
+                    if(old_stateu != self.field[i][j].alive):
+                        print('yeeeeeee')
+                        self.changes[-1].append((i, j))
+
+            self.iteration = len(self.changes) - 1
+        else:
+            self.iteration += 1
+
+            for coord in self.changes[self.iteration]:
+                self.field[coord[0]][coord[1]].alive = not self.field[coord[0]][coord[1]].alive
 
     def previous(self):
         array = []
@@ -76,6 +94,13 @@ class Field:
             print('ggggg')
             pp(array)
             self.field = array[0]
+
+    def prev(self):
+        if (self.iteration > 0):
+            for coord in self.changes[self.iteration]:
+                self.field[coord[0]][coord[1]].alive = not self.field[coord[0]][coord[1]].alive
+
+            self.iteration -= 1
 
 
 class Cell:
@@ -111,6 +136,7 @@ class Cell:
                 self.alive = False
             else:
                 self.alive = True
+
         else:
             if self.live_neightbors >= 2 and self.alive == False:
                 self.alive = True
