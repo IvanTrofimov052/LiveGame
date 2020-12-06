@@ -2,11 +2,27 @@
 import random
 from pprint import pprint as pp
 import copy
+import musicalbeeps
+
+
+notes = {
+    0: "pause",
+    1: "A",
+    2: "B",
+    3: "C",
+    4: "D",
+    5: "E",
+    6: "F",
+    7: "G",
+}
+
+player = musicalbeeps.Player(volume = 0.3,
+                            mute_output = False)
 
 mode = "normal"
 
-max_x = 20  # this const need to know the max x coordinat
-max_y = 20  # this const need to know the max y coordinat
+max_x = 10  # this const need to know the max x coordinat
+max_y = 10  # this const need to know the max y coordinat
 
 
 def num_to_binary_system(n):
@@ -28,6 +44,7 @@ class Field:
         self.field = array
         self.changes = []
         self.iteration = -1
+        self.music_bits = []
 
     # this function change the field
     def change_field(self, array):
@@ -102,6 +119,42 @@ class Field:
 
             self.iteration -= 1
 
+    def make_bits(self, field):
+        for element in field:
+            stroka = ""
+
+            for bit in element:
+                stroka += str(int(bit.alive))
+
+            self.music_bits.append(stroka)
+
+    def make_music_bits(self):
+        self.make_bits(self.field)
+
+        return self.music_bits
+
+    def make_music(self):
+        sound = self.make_music_bits()
+
+        return sound
+
+
+class Bits:
+    def make_bit_dec(self, bit):
+        dec = 0
+
+        for i in range(len(bit)):
+            dec += int(bit[i]) * (2**i)
+
+        return dec
+
+
+
+class Sound:
+    def make_sound(self, sound):
+        for element in sound:
+            sound = notes[Bits.make_bit_dec(self, element)]
+            player.play_note(sound, 1.0)
 
 class Cell:
     alive = True

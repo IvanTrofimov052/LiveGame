@@ -5,6 +5,7 @@ import asyncio
 
 # import keyboard
 
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (125, 125, 125)
@@ -15,10 +16,12 @@ PINK = (230, 50, 230)
 
 stop = False
 
+s = Sound()
+
 pygame.init()
 all_sprites = pygame.sprite.Group()
 
-sc = pygame.display.set_mode((max_x * 20, max_y * 20 + 50))
+sc = pygame.display.set_mode((300, 300))
 
 
 class DrawingCell(pygame.sprite.Sprite):
@@ -99,6 +102,9 @@ while 1:
             elif i.key == pygame.K_DOWN and stop == True:
                 a.previous()
                 pygame.display.update()
+            # make sound
+            elif i.key == pygame.K_q and stop == True:
+                s.make_sound(a.make_music())
 
         elif i.type == pygame.MOUSEBUTTONUP and stop == True:
             pos = pygame.mouse.get_pos()
