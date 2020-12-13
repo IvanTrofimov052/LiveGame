@@ -4,7 +4,6 @@ from pprint import pprint as pp
 import copy
 import musicalbeeps
 
-
 notes = {
     0: "pause",
     1: "A",
@@ -23,6 +22,8 @@ mode = "normal"
 
 max_x = 10  # this const need to know the max x coordinat
 max_y = 10  # this const need to know the max y coordinat
+
+music_mode = "guitar"
 
 
 def num_to_binary_system(n):
@@ -120,13 +121,24 @@ class Field:
             self.iteration -= 1
 
     def make_bits(self, field):
+        stroka = ""
+
         for element in field:
-            stroka = ""
 
             for bit in element:
                 stroka += str(int(bit.alive))
 
-            self.music_bits.append(stroka)
+        for i in range(0, len(stroka), 3):
+            stroka_1 = ""
+
+            try:
+                stroka_1 += stroka[i]
+                stroka_1 += stroka[i+1]
+                stroka_1 += stroka[i+2]
+
+                self.music_bits.append(stroka_1)
+            except:
+                pass
 
     def make_music_bits(self):
         self.make_bits(self.field)
@@ -146,6 +158,9 @@ class Bits:
         for i in range(len(bit)):
             dec += int(bit[i]) * (2**i)
 
+        if dec > 7:
+            print(bit)
+
         return dec
 
 
@@ -153,8 +168,12 @@ class Bits:
 class Sound:
     def make_sound(self, sound):
         for element in sound:
-            sound = notes[Bits.make_bit_dec(self, element)]
-            player.play_note(sound, 1.0)
+            if(mode == "normal"):
+                print("FUCk")
+                sound = notes[Bits.make_bit_dec(self, element)]
+                player.play_note(sound, 1.0)
+            else:
+                pass
 
 class Cell:
     alive = True
