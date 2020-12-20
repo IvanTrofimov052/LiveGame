@@ -107,11 +107,14 @@ while 1:
                 pygame.display.update()
             # make sound
             elif i.key == pygame.K_q and stop == True:
-                ioloop = asyncio.get_event_loop()
-                tasks = [asynco_func(s, a.make_music())]
-                wait_tasks = asyncio.wait(tasks)
-                ioloop.run_until_complete(wait_tasks)
-                ioloop.close()
+                bits = a.make_music()
+                thread = threading.Thread(target=lambda: s.make_sound(bits))
+                thread.start()
+                # ioloop = asyncio.get_event_loop()
+                # tasks = [asynco_func(s, a.make_music())]
+                # wait_tasks = asyncio.wait(tasks)
+                # ioloop.run_until_complete(wait_tasks)
+                # ioloop.close()
 
 
         elif i.type == pygame.MOUSEBUTTONUP and stop == True:
