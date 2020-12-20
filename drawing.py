@@ -1,5 +1,6 @@
 import pygame
 from main import *
+import asyncio
 # import keyboard
 import asyncio
 
@@ -21,8 +22,7 @@ s = Sound()
 pygame.init()
 all_sprites = pygame.sprite.Group()
 
-sc = pygame.display.set_mode((300, 300))
-
+sc = pygame.display.set_mode((max_x*21, max_y*21))
 
 class DrawingCell(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -104,7 +104,7 @@ while 1:
                 pygame.display.update()
             # make sound
             elif i.key == pygame.K_q and stop == True:
-                s.make_sound(a.make_music())
+                asyncio.run(s.make_sound(a.make_music()))
 
         elif i.type == pygame.MOUSEBUTTONUP and stop == True:
             pos = pygame.mouse.get_pos()

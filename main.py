@@ -3,6 +3,7 @@ import random
 from pprint import pprint as pp
 import copy
 import musicalbeeps
+import asyncio
 
 notes = {
     0: "pause",
@@ -166,12 +167,13 @@ class Bits:
 
 
 class Sound:
-    def make_sound(self, sound):
+    async def make_sound(self, sound):
         for element in sound:
             if(mode == "normal"):
                 print("FUCk")
                 sound = notes[Bits.make_bit_dec(self, element)]
                 player.play_note(sound, 1.0)
+                await asyncio.sleep(1)
             else:
                 pass
 
