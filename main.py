@@ -1,6 +1,7 @@
 # ошибка в том что соседи увеличиваюиться
 import random
 from pprint import pprint as pp
+from multiprocessing import Process
 import copy
 import musicalbeeps
 import asyncio
@@ -167,13 +168,12 @@ class Bits:
 
 
 class Sound:
-    async def make_sound(self, sound):
+    def make_sound(self, sound):
         for element in sound:
             if(mode == "normal"):
                 print("FUCk")
                 sound = notes[Bits.make_bit_dec(self, element)]
                 player.play_note(sound, 1.0)
-                await asyncio.sleep(1)
             else:
                 pass
 
@@ -259,6 +259,10 @@ def move(field):
 
 def app(xs):
     xs[0] = 2
+
+
+async def asynco_func(s, bits):
+    await s.make_sound(bits)
 
 
 if __name__ == '__main__':

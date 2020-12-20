@@ -1,5 +1,8 @@
 import pygame
+from concurrent.futures import ThreadPoolExecutor
 from main import *
+import threading
+from multiprocessing import Process
 import asyncio
 # import keyboard
 import asyncio
@@ -104,7 +107,12 @@ while 1:
                 pygame.display.update()
             # make sound
             elif i.key == pygame.K_q and stop == True:
-                asyncio.run(s.make_sound(a.make_music()))
+                ioloop = asyncio.get_event_loop()
+                tasks = [asynco_func(s, a.make_music())]
+                wait_tasks = asyncio.wait(tasks)
+                ioloop.run_until_complete(wait_tasks)
+                ioloop.close()
+
 
         elif i.type == pygame.MOUSEBUTTONUP and stop == True:
             pos = pygame.mouse.get_pos()
